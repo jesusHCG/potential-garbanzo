@@ -48,6 +48,27 @@ namespace ApiRest.Controllers
             }
         }
 
+        // POST: api/Products/2
+        public IHttpActionResult Post(int id, [FromBody]ProductDTO product)
+        {
+            try
+            {
+                products.Where(w => w.Id == id)
+                  .Select(s => {
+                      s.Name = product.Name;
+                      s.Category = product.Category;
+                      s.Price = product.Price;
+                      return s;
+                  }).ToList();
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
+
         // PUT: api/Products/5
         public IHttpActionResult Put(int id, [FromBody]ProductDTO product)
         {
